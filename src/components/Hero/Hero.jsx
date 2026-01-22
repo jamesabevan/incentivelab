@@ -4,6 +4,7 @@ const Hero = () => {
   const textRef = useRef(null);
   const containerRef = useRef(null);
   const [scale, setScale] = useState(1);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const calculateScale = () => {
@@ -18,13 +19,17 @@ const Hero = () => {
 
       const newScale = availableWidth / textWidth;
       setScale(newScale);
+      setIsReady(true);
     };
 
-    calculateScale();
-    window.addEventListener('resize', calculateScale);
+    // Wait for fonts to load before calculating
     document.fonts.ready.then(() => {
-      setTimeout(calculateScale, 50);
+      calculateScale();
+      // Double-check after a short delay
+      setTimeout(calculateScale, 100);
     });
+
+    window.addEventListener('resize', calculateScale);
 
     return () => window.removeEventListener('resize', calculateScale);
   }, []);
@@ -48,8 +53,10 @@ const Hero = () => {
                 fontSize: '180px',
                 lineHeight: 0.95,
                 letterSpacing: '-0.02em',
+                opacity: isReady ? 1 : 0,
+                transition: 'opacity 0.2s ease-in-out',
               }}
-              className="text-gray-900 whitespace-nowrap uppercase cursor-pointer hover:text-[#961065] transition-colors duration-300"
+              className="text-gray-900 whitespace-nowrap uppercase cursor-pointer hover:text-[#961065]"
             >
               <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
             </span>
