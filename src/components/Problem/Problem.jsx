@@ -32,18 +32,22 @@ const Problem = () => {
         const progress = (startOffset - sectionTop) / (scrollRange + startOffset);
         setScrollProgress(Math.min(Math.max(progress, 0), 1));
 
-        // Phase 1: Reveal cards (0 - 0.5 progress)
-        // Phase 2: Collapse cards (0.5 - 0.7 progress)
-        // Phase 3: Cover with statement (0.7 - 1 progress)
+        // Phase 1: Reveal cards (0 - 0.4 progress)
+        // Phase 2: Hold all cards visible (0.4 - 0.55 progress)
+        // Phase 3: Collapse cards (0.55 - 0.75 progress)
+        // Phase 4: Cover with statement (0.75 - 1 progress)
 
-        if (progress < 0.5) {
+        if (progress < 0.4) {
           setPhase('revealing');
           const cardsToShow = Math.min(
-            Math.floor((progress / 0.5) * (painPoints.length + 0.5)),
+            Math.floor((progress / 0.4) * (painPoints.length + 0.5)),
             painPoints.length
           );
           setVisibleCards(cardsToShow);
-        } else if (progress < 0.7) {
+        } else if (progress < 0.55) {
+          setPhase('holding');
+          setVisibleCards(painPoints.length);
+        } else if (progress < 0.75) {
           setPhase('collapsing');
           setVisibleCards(painPoints.length);
         } else {
@@ -78,7 +82,7 @@ const Problem = () => {
 
     if (phase === 'collapsing' || phase === 'covering') {
       const collapseProgress = phase === 'covering' ? 1 :
-        Math.min((scrollProgress - 0.5) / 0.2, 1);
+        Math.min((scrollProgress - 0.55) / 0.2, 1);
 
       // Collapse rows together (each row moves up)
       collapseOffset = -row * 80 * collapseProgress;
@@ -120,20 +124,41 @@ const Problem = () => {
     };
   };
 
-  const getCardColor = (index) => {
-    const colors = [
-      'bg-gray-900 text-white',
-      'bg-[#961065] text-white',
-      'bg-gray-100 text-gray-900',
-      'bg-[#961065] text-white',
-      'bg-gray-900 text-white',
-      'bg-gray-100 text-gray-900',
-    ];
-    return colors[index];
+  const getCardColor = () => {
+    return 'bg-gray-900 text-white';
   };
 
-  const getNumberColor = (index) => {
-    return index === 2 || index === 5 ? 'text-gray-200' : 'text-white/10';
+  const getIcon = (index) => {
+    const icons = [
+      // 1. Reps hitting quota, but revenue missing targets - target with X
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" strokeWidth={2} />
+        <circle cx="12" cy="12" r="6" strokeWidth={2} />
+        <circle cx="12" cy="12" r="2" strokeWidth={2} />
+        <path strokeLinecap="round" strokeWidth={2} d="M4 4l4 4m12 12l-4-4" />
+      </svg>,
+      // 2. Best performers leaving - door with arrow
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+      </svg>,
+      // 3. Chasing new logos, ignoring expansion - diverging arrows
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      </svg>,
+      // 4. Discounting heavily - scissors cutting price
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+      </svg>,
+      // 5. CRO and CFO fighting - users with conflict
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>,
+      // 6. Nobody can explain - question mark
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>,
+    ];
+    return icons[index];
   };
 
   return (
@@ -170,11 +195,11 @@ const Problem = () => {
                   <div
                     key={index}
                     style={getCardStyle(index)}
-                    className={`relative overflow-hidden rounded-xl p-4 md:p-5 ${getCardColor(index)}`}
+                    className={`relative overflow-hidden rounded-xl p-6 md:p-8 py-6 md:py-9 ${getCardColor()}`}
                   >
                     {/* Large background number */}
                     <span
-                      className={`absolute -right-1 -top-2 text-[60px] md:text-[70px] font-bold select-none pointer-events-none ${getNumberColor(index)}`}
+                      className="absolute -right-1 -top-2 text-[60px] md:text-[70px] font-bold select-none pointer-events-none text-[#961065]/50"
                       style={{ fontFamily: 'Anton, sans-serif' }}
                     >
                       {String(index + 1).padStart(2, '0')}
@@ -182,19 +207,10 @@ const Problem = () => {
 
                     {/* Content */}
                     <div className="relative z-10 flex items-center gap-3">
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                          index === 2 || index === 5 ? 'bg-[#961065]' : 'bg-white/20'
-                        }`}
-                      >
-                        <svg
-                          className="w-4 h-4 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-[#961065]">
+                        <span className="text-white">
+                          {getIcon(index)}
+                        </span>
                       </div>
 
                       <p

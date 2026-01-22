@@ -1,10 +1,49 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useLayoutEffect } from 'react';
 
 const Hero = () => {
   const textRef = useRef(null);
   const containerRef = useRef(null);
-  const [scale, setScale] = useState(1);
-  const [isReady, setIsReady] = useState(false);
+  const [scale, setScale] = useState(1.8); // Start with a reasonable estimate
+
+  // Use useLayoutEffect to calculate before paint
+  useLayoutEffect(() => {
+    const calculateScale = () => {
+      if (!textRef.current || !containerRef.current) return;
+
+      const containerWidth = containerRef.current.offsetWidth;
+      const padding = 64;
+      const availableWidth = containerWidth - padding;
+
+      // Temporarily reset to measure
+      const currentTransform = textRef.current.style.transform;
+      textRef.current.style.transform = 'scaleX(1)';
+
+      // Force reflow
+      const textWidth = textRef.current.getBoundingClientRect().width;
+
+      // Restore transform
+      textRef.current.style.transform = currentTransform;
+
+      if (textWidth > 0 && availableWidth > 0) {
+        const newScale = availableWidth / textWidth;
+        setScale(newScale);
+      }
+    };
+
+    // Run immediately
+    calculateScale();
+
+    // Run after fonts are ready
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        calculateScale();
+        // Extra attempts
+        setTimeout(calculateScale, 10);
+        setTimeout(calculateScale, 50);
+        setTimeout(calculateScale, 100);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const calculateScale = () => {
@@ -14,23 +53,18 @@ const Hero = () => {
       const padding = 64;
       const availableWidth = containerWidth - padding;
 
+      const currentTransform = textRef.current.style.transform;
       textRef.current.style.transform = 'scaleX(1)';
-      const textWidth = textRef.current.scrollWidth;
+      const textWidth = textRef.current.getBoundingClientRect().width;
+      textRef.current.style.transform = currentTransform;
 
-      const newScale = availableWidth / textWidth;
-      setScale(newScale);
-      setIsReady(true);
+      if (textWidth > 0 && availableWidth > 0) {
+        const newScale = availableWidth / textWidth;
+        setScale(newScale);
+      }
     };
 
-    // Wait for fonts to load before calculating
-    document.fonts.ready.then(() => {
-      calculateScale();
-      // Double-check after a short delay
-      setTimeout(calculateScale, 100);
-    });
-
     window.addEventListener('resize', calculateScale);
-
     return () => window.removeEventListener('resize', calculateScale);
   }, []);
 
@@ -53,10 +87,8 @@ const Hero = () => {
                 fontSize: '180px',
                 lineHeight: 0.95,
                 letterSpacing: '-0.02em',
-                opacity: isReady ? 1 : 0,
-                transition: 'opacity 0.2s ease-in-out',
               }}
-              className="text-gray-900 whitespace-nowrap uppercase cursor-pointer hover:text-[#961065]"
+              className="text-gray-900 whitespace-nowrap uppercase cursor-pointer hover:text-[#961065] transition-colors duration-300"
             >
               <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
             </span>
