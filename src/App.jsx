@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
@@ -8,25 +10,55 @@ import Video from './components/Video';
 import Services from './components/Services';
 import ROI from './components/ROI';
 import FinalCTA from './components/FinalCTA';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
+function HomePage() {
+  return (
+    <>
+      <Hero />
+      <Problem />
+      <Credibility />
+      <Insight />
+      <DesignRules />
+      <Video />
+      <Services />
+      <ROI />
+      <FinalCTA />
+    </>
+  );
+}
+
+function ContactPage() {
+  return <Contact />;
+}
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        <Hero />
-        <Problem />
-        <Credibility />
-        <Insight />
-        <DesignRules />
-        <Video />
-        <Services />
-        <ROI />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen">
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

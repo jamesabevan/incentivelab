@@ -1,5 +1,35 @@
+import { Link, useLocation } from 'react-router-dom';
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+
+  const navigationLinks = [
+    { label: 'Services', href: '#services', isRoute: false },
+    { label: 'About', href: '#about', isRoute: false },
+    { label: 'Case Studies', href: '#case-studies', isRoute: false },
+    { label: 'Contact', href: '/contact', isRoute: true },
+  ];
+
+  const servicesLinks = [
+    { label: 'Health Check', href: '#services' },
+    { label: 'Framework', href: '#services' },
+    { label: 'Workshop', href: '#services' },
+    { label: 'Full Redesign', href: '#services' },
+  ];
+
+  const legalLinks = [
+    { label: 'Privacy Policy', href: '#' },
+    { label: 'Terms of Service', href: '#' },
+  ];
+
+  // Handle hash link clicks - navigate to homepage if not already there
+  const handleHashClick = (e, href) => {
+    if (location.pathname !== '/') {
+      e.preventDefault();
+      window.location.href = '/' + href;
+    }
+  };
 
   return (
     <footer className="bg-gray-950 text-white">
@@ -8,13 +38,13 @@ const Footer = () => {
         <div className="grid md:grid-cols-12 gap-12 md:gap-8">
           {/* Brand */}
           <div className="md:col-span-5">
-            <a
-              href="#"
+            <Link
+              to="/"
               className="text-3xl md:text-4xl tracking-tight uppercase"
               style={{ fontFamily: 'Anton, sans-serif' }}
             >
               <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
-            </a>
+            </Link>
             <p
               className="text-gray-400 mt-6 max-w-sm leading-relaxed text-lg"
               style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
@@ -25,11 +55,11 @@ const Footer = () => {
             {/* Contact */}
             <div className="mt-8">
               <a
-                href="mailto:hello@incentivelab.com"
-                className="text-white hover:text-[#00CED1] transition-colors"
+                href="mailto:james@thecroquet.com"
+                className="text-white hover:text-[#961065] transition-colors"
                 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
               >
-                hello@incentivelab.com
+                james@thecroquet.com
               </a>
             </div>
           </div>
@@ -37,55 +67,86 @@ const Footer = () => {
           {/* Links */}
           <div className="md:col-span-7">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: 'NAVIGATION',
-                  links: [
-                    { label: 'Services', href: '#services' },
-                    { label: 'About', href: '#about' },
-                    { label: 'Case Studies', href: '#case-studies' },
-                    { label: 'Contact', href: '#contact' },
-                  ],
-                },
-                {
-                  title: 'SERVICES',
-                  links: [
-                    { label: 'Health Check', href: '#' },
-                    { label: 'Framework', href: '#' },
-                    { label: 'Workshop', href: '#' },
-                    { label: 'Full Redesign', href: '#' },
-                  ],
-                },
-                {
-                  title: 'LEGAL',
-                  links: [
-                    { label: 'Privacy Policy', href: '#' },
-                    { label: 'Terms of Service', href: '#' },
-                  ],
-                },
-              ].map((section, index) => (
-                <div key={index}>
-                  <p
-                    className="text-sm text-gray-500 uppercase tracking-widest mb-6"
-                    style={{ fontFamily: 'Anton, sans-serif' }}
-                  >
-                    {section.title}
-                  </p>
-                  <ul className="space-y-4">
-                    {section.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
+              {/* Navigation */}
+              <div>
+                <p
+                  className="text-sm text-gray-500 uppercase tracking-widest mb-6"
+                  style={{ fontFamily: 'Anton, sans-serif' }}
+                >
+                  NAVIGATION
+                </p>
+                <ul className="space-y-4">
+                  {navigationLinks.map((link, index) => (
+                    <li key={index}>
+                      {link.isRoute ? (
+                        <Link
+                          to={link.href}
+                          className="text-gray-400 hover:text-white transition-colors"
+                          style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
+                        >
+                          {link.label}
+                        </Link>
+                      ) : (
                         <a
                           href={link.href}
+                          onClick={(e) => handleHashClick(e, link.href)}
                           className="text-gray-400 hover:text-white transition-colors"
                           style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
                         >
                           {link.label}
                         </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Services */}
+              <div>
+                <p
+                  className="text-sm text-gray-500 uppercase tracking-widest mb-6"
+                  style={{ fontFamily: 'Anton, sans-serif' }}
+                >
+                  SERVICES
+                </p>
+                <ul className="space-y-4">
+                  {servicesLinks.map((link, index) => (
+                    <li key={index}>
+                      <a
+                        href={link.href}
+                        onClick={(e) => handleHashClick(e, link.href)}
+                        className="text-gray-400 hover:text-white transition-colors"
+                        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Legal */}
+              <div>
+                <p
+                  className="text-sm text-gray-500 uppercase tracking-widest mb-6"
+                  style={{ fontFamily: 'Anton, sans-serif' }}
+                >
+                  LEGAL
+                </p>
+                <ul className="space-y-4">
+                  {legalLinks.map((link, index) => (
+                    <li key={index}>
+                      <a
+                        href={link.href}
+                        className="text-gray-400 hover:text-white transition-colors"
+                        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

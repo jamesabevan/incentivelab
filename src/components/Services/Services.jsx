@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Services = () => {
   const services = [
     {
@@ -55,7 +57,7 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-gray-900">
+    <section id="services" className="py-24 md:py-32 bg-gray-900">
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="mb-16 md:mb-20 text-center">
@@ -124,8 +126,8 @@ const Services = () => {
                 >
                   {service.price}
                 </span>
-                <a
-                  href="#contact"
+                <Link
+                  to="/contact"
                   className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors group/link"
                   style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
                 >
@@ -138,7 +140,7 @@ const Services = () => {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </a>
+                </Link>
               </div>
 
               {/* Hover Accent */}

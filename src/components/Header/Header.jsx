@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showCenterLogo, setShowCenterLogo] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,30 +23,124 @@ const Header = () => {
     return () => { document.body.style.overflow = ''; };
   }, [isMenuOpen]);
 
-  const scrollToTop = (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const leftNav = [
-    { href: '#services', label: 'SERVICES' },
-    { href: '#about', label: 'ABOUT' },
+    { href: '#services', label: 'SERVICES', isRoute: false },
+    { href: '#about', label: 'ABOUT', isRoute: false },
   ];
 
   const rightNav = [
-    { href: '#case-studies', label: 'CASE STUDIES' },
-    { href: '#contact', label: 'CONTACT' },
+    { href: '#case-studies', label: 'CASE STUDIES', isRoute: false },
+    { href: '/contact', label: 'CONTACT', isRoute: true },
   ];
 
-  const NavPill = ({ href, label, onClick }) => (
-    <a
-      href={href}
-      onClick={onClick}
-      className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200"
-    >
-      {label}
-    </a>
-  );
+  const NavPill = ({ href, label, isRoute, onClick }) => {
+    if (isRoute) {
+      return (
+        <Link
+          to={href}
+          onClick={onClick}
+          className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200"
+        >
+          {label}
+        </Link>
+      );
+    }
+
+    // For hash links, handle navigation if not on home page
+    const handleClick = (e) => {
+      if (location.pathname !== '/') {
+        e.preventDefault();
+        window.location.href = '/' + href;
+      }
+      if (onClick) onClick();
+    };
+
+    return (
+      <a
+        href={href}
+        onClick={handleClick}
+        className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200"
+      >
+        {label}
+      </a>
+    );
+  };
+
+  const MobileNavLink = ({ href, label, isRoute }) => {
+    if (isRoute) {
+      return (
+        <Link
+          to={href}
+          onClick={() => setIsMenuOpen(false)}
+          className="block text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 hover:text-[#961065] transition-colors py-2 uppercase tracking-tight"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          {label}
+        </Link>
+      );
+    }
+
+    const handleClick = () => {
+      setIsMenuOpen(false);
+      if (location.pathname !== '/') {
+        window.location.href = '/' + href;
+      }
+    };
+
+    return (
+      <a
+        href={href}
+        onClick={handleClick}
+        className="block text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 hover:text-[#961065] transition-colors py-2 uppercase tracking-tight"
+        style={{ fontFamily: 'Anton, sans-serif' }}
+      >
+        {label}
+      </a>
+    );
+  };
+
+  // Render center content based on page
+  const renderCenterContent = () => {
+    // On contact page (or any non-home page), always show the logo
+    if (!isHomePage) {
+      return (
+        <Link
+          to="/"
+          className="text-2xl tracking-tight uppercase text-gray-900 hover:text-[#961065] transition-colors duration-300"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
+        </Link>
+      );
+    }
+
+    // On homepage, show booking link initially, then logo after scrolling
+    if (showCenterLogo) {
+      return (
+        <Link
+          to="/"
+          className="text-2xl tracking-tight uppercase text-gray-900 hover:text-[#961065] transition-colors duration-300"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        href="https://app.cal.eu/incentivelab"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-gray-600 tracking-wide hover:text-[#00CED1] transition-colors inline-flex items-center gap-1"
+      >
+        BOOK FREE 30 MINUTE SESSION
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    );
+  };
 
   return (
     <>
@@ -58,36 +155,20 @@ const Header = () => {
             {/* LEFT: Nav pills (desktop lg+) */}
             <div className="hidden lg:flex items-center gap-2">
               {leftNav.map((link) => (
-                <NavPill key={link.href} href={link.href} label={link.label} />
+                <NavPill key={link.href} href={link.href} label={link.label} isRoute={link.isRoute} />
               ))}
             </div>
 
             {/* LEFT: Logo (tablet/mobile below lg) */}
-            <a href="#" onClick={scrollToTop} className="lg:hidden" style={{ fontFamily: 'Anton, sans-serif' }}>
+            <Link to="/" className="lg:hidden" style={{ fontFamily: 'Anton, sans-serif' }}>
               <span className="text-2xl sm:text-3xl tracking-tight uppercase hover:text-[#961065] transition-colors">
                 <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
               </span>
-            </a>
+            </Link>
 
             {/* CENTER: CTA or Logo (desktop lg+) */}
             <div className="hidden lg:block absolute left-1/2 -translate-x-1/2">
-              {showCenterLogo ? (
-                <a
-                  href="#"
-                  onClick={scrollToTop}
-                  className="text-2xl tracking-tight uppercase text-gray-900 hover:text-[#961065] transition-colors duration-300"
-                  style={{ fontFamily: 'Anton, sans-serif' }}
-                >
-                  <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
-                </a>
-              ) : (
-                <a href="https://app.cal.eu/incentivelab" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 tracking-wide hover:text-[#00CED1] transition-colors inline-flex items-center gap-1">
-                  BOOK FREE 30 MINUTE SESSION
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-              )}
+              {renderCenterContent()}
             </div>
 
             {/* RIGHT: Nav pills + hamburger */}
@@ -95,15 +176,15 @@ const Header = () => {
               {/* Desktop lg+: right nav pills */}
               <div className="hidden lg:flex items-center gap-2">
                 {rightNav.map((link) => (
-                  <NavPill key={link.href} href={link.href} label={link.label} />
+                  <NavPill key={link.href} href={link.href} label={link.label} isRoute={link.isRoute} />
                 ))}
               </div>
 
               {/* Tablet md-lg: some nav pills */}
               <div className="hidden md:flex lg:hidden items-center gap-2">
-                <NavPill href="#services" label="SERVICES" />
-                <NavPill href="#about" label="ABOUT" />
-                <NavPill href="#contact" label="CONTACT" />
+                <NavPill href="#services" label="SERVICES" isRoute={false} />
+                <NavPill href="#about" label="ABOUT" isRoute={false} />
+                <NavPill href="/contact" label="CONTACT" isRoute={true} />
               </div>
 
               {/* Hamburger menu */}
@@ -135,22 +216,15 @@ const Header = () => {
             <ul className="space-y-1">
               {[...leftNav, ...rightNav].map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 hover:text-[#961065] transition-colors py-2 uppercase tracking-tight"
-                    style={{ fontFamily: 'Anton, sans-serif' }}
-                  >
-                    {link.label}
-                  </a>
+                  <MobileNavLink href={link.href} label={link.label} isRoute={link.isRoute} />
                 </li>
               ))}
             </ul>
           </nav>
           <div className="pt-8 border-t border-gray-200">
             <p className="text-sm text-gray-400 uppercase tracking-wider mb-3">Get in touch</p>
-            <a href="mailto:hello@incentivelab.com" className="text-lg font-medium text-gray-900 hover:text-gray-400 transition-colors">
-              hello@incentivelab.com
+            <a href="mailto:james@thecroquet.com" className="text-lg font-medium text-gray-900 hover:text-gray-400 transition-colors">
+              james@thecroquet.com
             </a>
           </div>
         </div>
