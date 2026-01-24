@@ -1,0 +1,8 @@
+# Robots.txt for Incentive Lab
+# https://www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Sitemap location (UPDATE WITH YOUR ACTUAL DOMAIN)
+Sitemap: https://www.incentivelab.co.uk/sitemap.xml
