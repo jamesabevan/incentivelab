@@ -30,7 +30,9 @@ const FinalCTA = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
               <a
-                href="#"
+                href="https://tally.so/r/rjjWg2"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-5 bg-white text-gray-900 text-lg rounded-full hover:bg-[#00CED1] hover:text-white transition-all duration-300"
                 style={{ fontFamily: 'Anton, sans-serif' }}
               >
