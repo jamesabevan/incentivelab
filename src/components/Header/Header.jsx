@@ -29,11 +29,25 @@ const Header = () => {
   ];
 
   const rightNav = [
-    { href: '#case-studies', label: 'CASE STUDIES', isRoute: false },
+    { href: 'https://tally.so/r/rjjWg2', label: 'TAKE STRESS TEST', isExternal: true },
     { href: '/contact', label: 'CONTACT', isRoute: true },
   ];
 
-  const NavPill = ({ href, label, isRoute, onClick }) => {
+  const NavPill = ({ href, label, isRoute, isExternal, onClick }) => {
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClick}
+          className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200"
+        >
+          {label}
+        </a>
+      );
+    }
+
     if (isRoute) {
       return (
         <Link
@@ -66,7 +80,22 @@ const Header = () => {
     );
   };
 
-  const MobileNavLink = ({ href, label, isRoute }) => {
+  const MobileNavLink = ({ href, label, isRoute, isExternal }) => {
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setIsMenuOpen(false)}
+          className="block text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 hover:text-[#961065] transition-colors py-2 uppercase tracking-tight"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          {label}
+        </a>
+      );
+    }
+
     if (isRoute) {
       return (
         <Link
@@ -176,7 +205,7 @@ const Header = () => {
               {/* Desktop lg+: right nav pills */}
               <div className="hidden lg:flex items-center gap-2">
                 {rightNav.map((link) => (
-                  <NavPill key={link.href} href={link.href} label={link.label} isRoute={link.isRoute} />
+                  <NavPill key={link.href} href={link.href} label={link.label} isRoute={link.isRoute} isExternal={link.isExternal} />
                 ))}
               </div>
 
@@ -216,7 +245,7 @@ const Header = () => {
             <ul className="space-y-1">
               {[...leftNav, ...rightNav].map((link) => (
                 <li key={link.href}>
-                  <MobileNavLink href={link.href} label={link.label} isRoute={link.isRoute} />
+                  <MobileNavLink href={link.href} label={link.label} isRoute={link.isRoute} isExternal={link.isExternal} />
                 </li>
               ))}
             </ul>
