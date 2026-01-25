@@ -23,6 +23,10 @@ const Header = () => {
     return () => { document.body.style.overflow = ''; };
   }, [isMenuOpen]);
 
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const leftNav = [
     { href: '#services', label: 'SERVICES', isRoute: false },
     { href: '#about', label: 'ABOUT', isRoute: false },
@@ -135,6 +139,7 @@ const Header = () => {
       return (
         <Link
           to="/"
+          onClick={handleLogoClick}
           className="text-2xl tracking-tight uppercase text-gray-900 hover:text-[#961065] transition-colors duration-300"
           style={{ fontFamily: 'Anton, sans-serif' }}
         >
@@ -148,6 +153,7 @@ const Header = () => {
       return (
         <Link
           to="/"
+          onClick={handleLogoClick}
           className="text-2xl tracking-tight uppercase text-gray-900 hover:text-[#961065] transition-colors duration-300"
           style={{ fontFamily: 'Anton, sans-serif' }}
         >
@@ -189,7 +195,7 @@ const Header = () => {
             </div>
 
             {/* LEFT: Logo (tablet/mobile below lg) */}
-            <Link to="/" className="lg:hidden" style={{ fontFamily: 'Anton, sans-serif' }}>
+            <Link to="/" onClick={handleLogoClick} className="lg:hidden" style={{ fontFamily: 'Anton, sans-serif' }}>
               <span className="text-2xl sm:text-3xl tracking-tight uppercase hover:text-[#961065] transition-colors">
                 <span className="lowercase">i</span>NCENT<span className="lowercase">i</span>VE LAB
               </span>
