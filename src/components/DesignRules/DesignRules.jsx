@@ -112,7 +112,7 @@ const DesignRules = () => {
   };
 
   return (
-    <section id="services" className="py-24 md:py-32 bg-white">
+    <section id="about" className="py-24 md:py-32 bg-white">
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
