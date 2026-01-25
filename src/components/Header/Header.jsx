@@ -5,8 +5,17 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showCenterLogo, setShowCenterLogo] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+
+  const serviceItems = [
+    { href: '/services/quick-plan-review', label: 'Quick Plan Review' },
+    { href: '/services/health-check', label: 'Health Check Diagnostic' },
+    { href: '/services/executive-workshop', label: 'Executive Workshop' },
+    { href: '/services/full-redesign', label: 'Full System Redesign' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +48,70 @@ const Header = () => {
     { href: 'https://tally.so/r/rjjWg2', label: 'FREE STRESS TEST', isExternal: true },
     { href: '/contact', label: 'CONTACT', isRoute: true },
   ];
+
+  // Services NavPill with dropdown
+  const ServicesNavPill = () => {
+    const handleServicesClick = (e) => {
+      if (location.pathname !== '/') {
+        e.preventDefault();
+        window.location.href = '/#services';
+      }
+    };
+
+    return (
+      <div
+        className="relative"
+        onMouseEnter={() => setIsServicesOpen(true)}
+        onMouseLeave={() => setIsServicesOpen(false)}
+      >
+        <a
+          href="#services"
+          onClick={handleServicesClick}
+          className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200 inline-flex items-center gap-1"
+        >
+          SERVICES
+          <svg
+            className={`w-3 h-3 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </a>
+
+        {/* Dropdown */}
+        <div
+          className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 ${
+            isServicesOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+          }`}
+        >
+          <div className="py-2">
+            {serviceItems.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#961065] transition-colors"
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <div className="border-t border-gray-100">
+            <a
+              href="#services"
+              onClick={handleServicesClick}
+              className="block px-4 py-3 text-sm text-[#961065] hover:bg-gray-50 transition-colors font-medium"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
+            >
+              View All Services →
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const NavPill = ({ href, label, isRoute, isExternal, onClick }) => {
     if (isExternal) {
@@ -192,9 +265,8 @@ const Header = () => {
 
             {/* LEFT: Nav pills (desktop lg+) */}
             <div className="hidden lg:flex items-center gap-2">
-              {leftNav.map((link) => (
-                <NavPill key={link.href} href={link.href} label={link.label} isRoute={link.isRoute} />
-              ))}
+              <ServicesNavPill />
+              <NavPill href="#about" label="ABOUT" isRoute={false} />
             </div>
 
             {/* LEFT: Logo (tablet/mobile below lg) */}
@@ -220,7 +292,7 @@ const Header = () => {
 
               {/* Tablet md-lg: some nav pills */}
               <div className="hidden md:flex lg:hidden items-center gap-2">
-                <NavPill href="#services" label="SERVICES" isRoute={false} />
+                <ServicesNavPill />
                 <NavPill href="#about" label="ABOUT" isRoute={false} />
                 <NavPill href="/contact" label="CONTACT" isRoute={true} />
               </div>
@@ -252,7 +324,58 @@ const Header = () => {
         <div className="px-6 sm:px-10 pt-20 pb-8 h-full flex flex-col">
           <nav className="flex-1 pt-8">
             <ul className="space-y-1">
-              {[...leftNav, ...rightNav].map((link) => (
+              {/* Services with expandable submenu */}
+              <li>
+                <button
+                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                  className="flex items-center gap-3 text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 hover:text-[#961065] transition-colors py-2 uppercase tracking-tight w-full text-left"
+                  style={{ fontFamily: 'Anton, sans-serif' }}
+                >
+                  SERVICES
+                  <svg
+                    className={`w-6 h-6 transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {/* Submenu */}
+                <div className={`overflow-hidden transition-all duration-300 ${isMobileServicesOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className="pl-4 py-2 space-y-2">
+                    {serviceItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block text-xl sm:text-2xl text-gray-600 hover:text-[#961065] transition-colors py-1"
+                        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                    <a
+                      href="#services"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        if (location.pathname !== '/') {
+                          window.location.href = '/#services';
+                        }
+                      }}
+                      className="block text-xl sm:text-2xl text-[#961065] hover:text-[#00CED1] transition-colors py-1"
+                      style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+                    >
+                      View All →
+                    </a>
+                  </div>
+                </div>
+              </li>
+              {/* Other nav items (excluding SERVICES from leftNav) */}
+              <li>
+                <MobileNavLink href="#about" label="ABOUT" isRoute={false} />
+              </li>
+              {rightNav.map((link) => (
                 <li key={link.href}>
                   <MobileNavLink href={link.href} label={link.label} isRoute={link.isRoute} isExternal={link.isExternal} />
                 </li>
