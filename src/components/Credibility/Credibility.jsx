@@ -6,7 +6,7 @@ const Credibility = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-white relative z-10 -mt-[35vh]">
+    <section className="py-20 md:py-28 bg-white relative z-10">
       <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
         {/* Stats Bar */}
         <div className="grid grid-cols-3 gap-4 md:gap-8 mb-16 md:mb-20">
