@@ -5,7 +5,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showCenterLogo, setShowCenterLogo] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -49,7 +48,7 @@ const Header = () => {
     { href: '/contact', label: 'CONTACT', isRoute: true },
   ];
 
-  // Services NavPill with dropdown
+  // Services NavPill - simple link to #services section
   const ServicesNavPill = () => {
     const handleServicesClick = (e) => {
       if (location.pathname !== '/') {
@@ -59,49 +58,13 @@ const Header = () => {
     };
 
     return (
-      <div
-        className="relative"
-        onMouseEnter={() => setIsServicesOpen(true)}
-        onMouseLeave={() => setIsServicesOpen(false)}
+      <a
+        href="#services"
+        onClick={handleServicesClick}
+        className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200"
       >
-        <a
-          href="#services"
-          onClick={handleServicesClick}
-          className="px-5 py-2 text-sm font-medium text-gray-900 bg-gray-100 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-200"
-        >
-          SERVICES
-        </a>
-
-        {/* Dropdown */}
-        <div
-          className={`absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-200 ${
-            isServicesOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-          }`}
-        >
-          <div className="py-2">
-            {serviceItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#961065] transition-colors"
-                style={{ fontFamily: 'Poppins, sans-serif' }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-          <div className="border-t border-gray-100">
-            <a
-              href="#services"
-              onClick={handleServicesClick}
-              className="block px-4 py-3 text-sm text-[#961065] hover:bg-gray-50 transition-colors font-medium"
-              style={{ fontFamily: 'Poppins, sans-serif' }}
-            >
-              View All Services →
-            </a>
-          </div>
-        </div>
-      </div>
+        SERVICES
+      </a>
     );
   };
 
@@ -349,10 +312,15 @@ const Header = () => {
                     ))}
                     <a
                       href="#services"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         setIsMenuOpen(false);
                         if (location.pathname !== '/') {
                           window.location.href = '/#services';
+                        } else {
+                          setTimeout(() => {
+                            document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                          }, 300);
                         }
                       }}
                       className="block text-xl sm:text-2xl text-[#961065] hover:text-[#00CED1] transition-colors py-1"

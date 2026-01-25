@@ -30,10 +30,10 @@ function HomePage() {
     <>
       <Hero />
       <Problem />
+      <Video />
       <Credibility />
       <Insight />
       <DesignRules />
-      <Video />
       <Services />
       <ROI />
       <FinalCTA />
