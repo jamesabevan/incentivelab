@@ -8,6 +8,7 @@ const Services = () => {
       description: 'Get expert validation of your compensation plans in just one week. I\'ll assess your plans against proven design principles and identify your top 3-5 critical misalignments—without needing detailed data or long engagements.',
       price: 'From £5,000',
       cta: 'Learn more',
+      link: '/services/quick-plan-review',
       accent: '#961065',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -21,6 +22,7 @@ const Services = () => {
       description: 'A comprehensive 2-3 week assessment of your entire compensation system. Data-driven analysis across 10 dimensions to uncover root causes, quantify impact, and prioritize your roadmap—from quick wins to strategic fixes.',
       price: 'From £6,500',
       cta: 'Learn more',
+      link: '/services/health-check',
       accent: '#00CED1',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +35,8 @@ const Services = () => {
       title: 'EXECUTIVE ALIGNMENT WORKSHOP',
       description: 'Get your CRO, CFO, and CEO aligned on compensation philosophy before you redesign anything. A facilitated half or full-day session that creates strategic clarity and ends executive tension over comp decisions.',
       price: 'From £10,000',
-      cta: 'Book Workshop',
+      cta: 'Learn more',
+      link: '/services/executive-workshop',
       accent: '#961065',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,7 +49,8 @@ const Services = () => {
       title: 'FULL SYSTEM REDESIGN',
       description: 'Complete compensation architecture redesign using the proven 8-Step Incentive Engine framework. I design the strategy, structure, and specifications—your team implements. From behavior mapping to governance, delivered in 8-16 weeks.',
       price: 'From £35,000',
-      cta: "Let's Talk",
+      cta: 'Learn more',
+      link: '/services/full-redesign',
       accent: '#00CED1',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +131,7 @@ const Services = () => {
                   {service.price}
                 </span>
                 <Link
-                  to="/contact"
+                  to={service.link}
                   className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors group/link"
                   style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
                 >
