@@ -36,7 +36,7 @@ const Header = () => {
   ];
 
   const rightNav = [
-    { href: 'https://tally.so/r/rjjWg2', label: 'TAKE STRESS TEST', isExternal: true },
+    { href: 'https://tally.so/r/rjjWg2', label: 'FREE STRESS TEST', isExternal: true },
     { href: '/contact', label: 'CONTACT', isRoute: true },
   ];
 
