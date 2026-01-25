@@ -23,7 +23,10 @@ const Header = () => {
     return () => { document.body.style.overflow = ''; };
   }, [isMenuOpen]);
 
-  const handleLogoClick = () => {
+  const handleLogoClick = (e) => {
+    if (isHomePage) {
+      e.preventDefault();
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
