@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
-import Credibility from './components/Credibility';
 import Insight from './components/Insight';
 import DesignRules from './components/DesignRules';
 import Video from './components/Video';
@@ -31,7 +30,6 @@ function HomePage() {
       <Hero />
       <Problem />
       <Video />
-      <Credibility />
       <Insight />
       <DesignRules />
       <Services />

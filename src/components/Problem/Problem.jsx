@@ -168,7 +168,7 @@ const Problem = () => {
       style={{ minHeight: '200vh' }}
     >
       {/* Sticky Container */}
-      <div className="sticky top-0 min-h-screen flex flex-col pt-24 md:pt-28 pb-8 md:pb-12 overflow-hidden">
+      <div className="sticky top-0 flex flex-col pt-24 md:pt-28 pb-8 md:pb-12 overflow-hidden">
         <div className="px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto w-full">
           {/* Section Header */}
           <div className="text-center mb-6 md:mb-8">

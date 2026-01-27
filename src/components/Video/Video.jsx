@@ -1,6 +1,6 @@
 const Video = () => {
   return (
-    <section className="py-12 md:py-16 bg-gray-50">
+    <section className="py-12 md:py-16 bg-gray-50 relative z-10 -mt-[15vh]">
       <div className="px-4 sm:px-6 lg:px-10 max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
