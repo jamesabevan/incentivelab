@@ -12,9 +12,9 @@ const Footer = () => {
   ];
 
   const servicesLinks = [
-    { label: 'Quick Plan Review', href: '#services' },
-    { label: 'Executive Workshop', href: '#services' },
-    { label: 'Full Redesign', href: '#services' },
+    { label: 'Quick Plan Review', href: '/services/quick-plan-review', isRoute: true },
+    { label: 'Executive Workshop', href: '/services/executive-workshop', isRoute: true },
+    { label: 'Full Redesign', href: '/services/full-redesign', isRoute: true },
   ];
 
   const legalLinks = [
@@ -111,14 +111,13 @@ const Footer = () => {
                 <ul className="space-y-4">
                   {servicesLinks.map((link, index) => (
                     <li key={index}>
-                      <a
-                        href={link.href}
-                        onClick={(e) => handleHashClick(e, link.href)}
+                      <Link
+                        to={link.href}
                         className="text-gray-400 hover:text-white transition-colors"
                         style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
                       >
                         {link.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
