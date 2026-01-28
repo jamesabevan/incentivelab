@@ -237,10 +237,10 @@ const DesignRules = () => {
 
         {/* CTA */}
         <div
-          className="text-center p-8 md:p-12 bg-gray-900 rounded-3xl"
+          className="text-center p-8 md:p-12 bg-[#961065] rounded-3xl"
         >
           <p
-            className="text-lg md:text-xl text-white/70 mb-6"
+            className="text-lg md:text-xl text-white mb-6"
             style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
           >
             Want to see how these rules apply to your comp plan?
