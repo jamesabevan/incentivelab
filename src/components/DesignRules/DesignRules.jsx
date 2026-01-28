@@ -176,15 +176,14 @@ const DesignRules = () => {
         </div>
 
         {/* Accordion Rules */}
-        <div className="space-y-3 mb-16">
+        <div className="space-y-2 mb-16">
           {rules.map((rule, index) => {
             const isOpen = openRule === index;
-            const styles = getCardStyles(rule.theme);
 
             return (
               <div
                 key={index}
-                className={`${styles.bg} rounded-2xl overflow-hidden transition-all duration-300`}
+                className={`rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'bg-white border border-gray-200' : 'bg-gray-900'}`}
               >
                 {/* Accordion Header */}
                 <button
@@ -193,7 +192,7 @@ const DesignRules = () => {
                 >
                   {/* Rule Number */}
                   <span
-                    className={`text-3xl md:text-4xl ${styles.text} flex-shrink-0 w-16`}
+                    className={`text-3xl md:text-4xl flex-shrink-0 w-16 transition-colors duration-300 ${isOpen ? 'text-[#00CED1]' : 'text-[#961065]'}`}
                     style={{ fontFamily: 'Anton, sans-serif' }}
                   >
                     {rule.number}
@@ -201,7 +200,7 @@ const DesignRules = () => {
 
                   {/* Title */}
                   <h3
-                    className={`${styles.text} uppercase tracking-wide text-lg md:text-xl lg:text-2xl flex-1`}
+                    className={`uppercase tracking-wide text-lg md:text-xl lg:text-2xl flex-1 transition-colors duration-300 ${isOpen ? 'text-gray-900' : 'text-white'}`}
                     style={{ fontFamily: 'Anton, sans-serif' }}
                   >
                     {rule.title}
@@ -209,7 +208,7 @@ const DesignRules = () => {
 
                   {/* Toggle Icon */}
                   <svg
-                    className={`w-6 h-6 ${styles.text} flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`w-6 h-6 flex-shrink-0 transition-all duration-300 ${isOpen ? 'rotate-180 text-gray-400' : 'text-white/60'}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -224,7 +223,7 @@ const DesignRules = () => {
                 >
                   <div className="px-5 md:px-6 pb-5 md:pb-6 pl-[84px] md:pl-[104px]">
                     <p
-                      className={`${styles.subtext} text-base md:text-lg`}
+                      className="text-gray-600 text-base md:text-lg"
                       style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
                     >
                       {rule.description}
