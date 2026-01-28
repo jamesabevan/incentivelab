@@ -69,7 +69,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="min-h-screen bg-white pt-14 sm:pt-16 flex flex-col">
+    <section className="bg-white pt-14 sm:pt-16 flex flex-col pb-8">
       {/* Giant Typography - ONLY on lg+ screens */}
       <div
         ref={containerRef}

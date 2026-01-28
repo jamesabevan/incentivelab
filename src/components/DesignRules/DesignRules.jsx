@@ -1,4 +1,12 @@
+import { useState } from 'react';
+
 const DesignRules = () => {
+  const [openRule, setOpenRule] = useState(null);
+
+  const toggleRule = (index) => {
+    setOpenRule(openRule === index ? null : index);
+  };
+
   const rules = [
     {
       number: '01',
@@ -167,57 +175,61 @@ const DesignRules = () => {
           </div>
         </div>
 
-        {/* Bento Grid of Rules */}
-        <div className="grid md:grid-cols-6 gap-4 md:gap-6 mb-16">
+        {/* Accordion Rules */}
+        <div className="space-y-3 mb-16">
           {rules.map((rule, index) => {
+            const isOpen = openRule === index;
             const styles = getCardStyles(rule.theme);
-            const sizeClasses = getSizeClasses(rule.size);
 
             return (
               <div
                 key={index}
-                className={`${styles.bg} ${sizeClasses} rounded-3xl p-6 md:p-8 relative overflow-hidden group transition-transform duration-300 hover:scale-[1.02]`}
+                className={`${styles.bg} rounded-2xl overflow-hidden transition-all duration-300`}
               >
-                {/* Large Background Number */}
-                <span
-                  className={`absolute -right-4 -top-8 text-[120px] md:text-[180px] font-bold ${styles.number} select-none pointer-events-none`}
-                  style={{ fontFamily: 'Anton, sans-serif' }}
+                {/* Accordion Header */}
+                <button
+                  onClick={() => toggleRule(index)}
+                  className="w-full p-5 md:p-6 flex items-center gap-4 md:gap-6 text-left"
                 >
-                  {rule.number}
-                </span>
-
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col">
                   {/* Rule Number */}
                   <span
-                    className={`text-sm ${styles.subtext} uppercase tracking-widest mb-4`}
-                    style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+                    className={`text-3xl md:text-4xl ${styles.text} flex-shrink-0 w-16`}
+                    style={{ fontFamily: 'Anton, sans-serif' }}
                   >
-                    RULE {rule.number}
+                    {rule.number}
                   </span>
 
                   {/* Title */}
                   <h3
-                    className={`${styles.text} uppercase tracking-wide mb-4 ${
-                      rule.size === 'large' ? 'text-2xl md:text-3xl' :
-                      rule.size === 'medium' ? 'text-xl md:text-2xl' :
-                      rule.size === 'bottom-half' ? 'text-xl md:text-2xl lg:text-3xl' : 'text-lg md:text-xl'
-                    }`}
+                    className={`${styles.text} uppercase tracking-wide text-lg md:text-xl lg:text-2xl flex-1`}
                     style={{ fontFamily: 'Anton, sans-serif' }}
                   >
                     {rule.title}
                   </h3>
 
-                  {/* Description */}
-                  <p
-                    className={`${styles.subtext} mt-auto ${
-                      rule.size === 'small' ? 'text-sm' :
-                      rule.size === 'bottom-half' ? 'text-base md:text-lg' : 'text-base md:text-lg'
-                    }`}
-                    style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
+                  {/* Toggle Icon */}
+                  <svg
+                    className={`w-6 h-6 ${styles.text} flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    {rule.description}
-                  </p>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Accordion Content */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-40' : 'max-h-0'}`}
+                >
+                  <div className="px-5 md:px-6 pb-5 md:pb-6 pl-[84px] md:pl-[104px]">
+                    <p
+                      className={`${styles.subtext} text-base md:text-lg`}
+                      style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
+                    >
+                      {rule.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
