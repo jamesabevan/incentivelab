@@ -358,7 +358,7 @@ const ExecutiveWorkshop = () => {
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#00CED1]">✓</span>
-              Post-Health Check clients (need alignment before acting on findings)
+              Post-Review clients (need alignment before acting on findings)
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#00CED1]">✓</span>
@@ -399,9 +399,8 @@ const ExecutiveWorkshop = () => {
             What Happens Next
           </h2>
           <div className="space-y-4 text-lg text-gray-600" style={{ fontFamily: 'Poppins, sans-serif' }}>
-            <p><span className="text-[#961065] font-semibold">60%</span> move to Full System Redesign (alignment achieved, ready to build)</p>
-            <p><span className="text-[#961065] font-semibold">25%</span> move to Health Check (need data diagnosis first)</p>
-            <p><span className="text-[#961065] font-semibold">10%</span> implement internal changes (clarity was enough)</p>
+            <p><span className="text-[#961065] font-semibold">70%</span> move to Full System Redesign (alignment achieved, ready to build)</p>
+            <p><span className="text-[#961065] font-semibold">20%</span> implement internal changes (clarity was enough)</p>
             <p className="text-gray-500 mt-4">Many clients do this annually or semi-annually for strategic reviews</p>
           </div>
         </div>

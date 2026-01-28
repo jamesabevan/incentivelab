@@ -564,7 +564,7 @@ const FullRedesign = () => {
           <ul className="space-y-4 text-lg text-gray-600" style={{ fontFamily: 'Poppins, sans-serif' }}>
             <li className="flex items-start gap-3">
               <span className="text-[#00CED1]">✓</span>
-              Post-Health Check clients (diagnosis done, ready to rebuild)
+              Post-Review clients (diagnosis done, ready to rebuild)
             </li>
             <li className="flex items-start gap-3">
               <span className="text-[#00CED1]">✓</span>

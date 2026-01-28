@@ -11,7 +11,6 @@ const Header = () => {
 
   const serviceItems = [
     { href: '/services/quick-plan-review', label: 'Quick Plan Review' },
-    { href: '/services/health-check', label: 'Health Check Diagnostic' },
     { href: '/services/executive-workshop', label: 'Executive Workshop' },
     { href: '/services/full-redesign', label: 'Full System Redesign' },
   ];

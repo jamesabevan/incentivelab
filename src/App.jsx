@@ -11,7 +11,7 @@ import ROI from './components/ROI';
 import FinalCTA from './components/FinalCTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import { QuickPlanReview, HealthCheck, ExecutiveWorkshop, FullRedesign } from './pages/services';
+import { QuickPlanReview, ExecutiveWorkshop, FullRedesign } from './pages/services';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -54,7 +54,6 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/services/quick-plan-review" element={<QuickPlanReview />} />
-            <Route path="/services/health-check" element={<HealthCheck />} />
             <Route path="/services/executive-workshop" element={<ExecutiveWorkshop />} />
             <Route path="/services/full-redesign" element={<FullRedesign />} />
           </Routes>

@@ -12,9 +12,8 @@ const Footer = () => {
   ];
 
   const servicesLinks = [
-    { label: 'Health Check', href: '#services' },
-    { label: 'Framework', href: '#services' },
-    { label: 'Workshop', href: '#services' },
+    { label: 'Quick Plan Review', href: '#services' },
+    { label: 'Executive Workshop', href: '#services' },
     { label: 'Full Redesign', href: '#services' },
   ];
 

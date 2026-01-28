@@ -363,9 +363,9 @@ const QuickPlanReview = () => {
             What Happens Next
           </h2>
           <div className="space-y-4 text-lg text-gray-600" style={{ fontFamily: 'Poppins, sans-serif' }}>
-            <p><span className="text-[#961065] font-semibold">40%</span> of clients move to Health Check Diagnostic (need full data-driven analysis)</p>
-            <p><span className="text-[#961065] font-semibold">30%</span> move to Executive Workshop (need leadership alignment first)</p>
-            <p><span className="text-[#961065] font-semibold">20%</span> implement recommendations themselves (validation was enough)</p>
+            <p><span className="text-[#961065] font-semibold">40%</span> of clients move to Executive Workshop (need leadership alignment first)</p>
+            <p><span className="text-[#961065] font-semibold">35%</span> move to Full System Redesign (ready to rebuild)</p>
+            <p><span className="text-[#961065] font-semibold">25%</span> implement recommendations themselves (validation was enough)</p>
           </div>
         </div>
       </section>

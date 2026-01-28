@@ -17,20 +17,6 @@ const Services = () => {
       ),
     },
     {
-      tag: 'DIAGNOSE YOUR SYSTEM',
-      title: 'HEALTH CHECK DIAGNOSTIC',
-      description: 'A comprehensive 2-3 week assessment of your entire compensation system. Data-driven analysis across 10 dimensions to uncover root causes, quantify impact, and prioritize your roadmap—from quick wins to strategic fixes.',
-      price: 'From £6,500',
-      cta: 'Learn more',
-      link: '/services/health-check',
-      accent: '#00CED1',
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      ),
-    },
-    {
       tag: 'ALIGN YOUR LEADERSHIP',
       title: 'EXECUTIVE ALIGNMENT WORKSHOP',
       description: 'Get your CRO, CFO, and CEO aligned on compensation philosophy before you redesign anything. A facilitated half or full-day session that creates strategic clarity and ends executive tension over comp decisions.',
@@ -75,32 +61,31 @@ const Services = () => {
             className="text-lg md:text-xl text-white/60 max-w-3xl mx-auto"
             style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
           >
-            Built on <span className="text-[#00CED1]">The Incentive Engine™</span> framework - the 8-step methodology for implementing the 9 Design Rules.
+            Built on <span className="text-[#00CED1]">The Incentive Engine™</span> framework - the 8-step methodology for implementing the 9 Design Rules
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 md:p-10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:bg-white/10"
+              className="group relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 md:p-10 border-2 border-white/10 hover:border-[#961065] transition-all duration-300 hover:bg-white/10 flex flex-col"
             >
               {/* Icon */}
               <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
-                style={{ backgroundColor: `${service.accent}20`, color: service.accent }}
+                style={{ backgroundColor: '#00CED120', color: '#00CED1' }}
               >
                 {service.icon}
               </div>
 
               {/* Tag */}
               <p
-                className="text-xs uppercase tracking-widest mb-4"
+                className="text-xs uppercase tracking-widest mb-4 text-[#00CED1]"
                 style={{
                   fontFamily: 'Poppins, sans-serif',
                   fontWeight: 600,
-                  color: service.accent,
                 }}
               >
                 {service.tag}
@@ -116,14 +101,14 @@ const Services = () => {
 
               {/* Description */}
               <p
-                className="text-base md:text-lg text-white/60 leading-relaxed mb-8"
+                className="text-base md:text-lg text-white/60 leading-relaxed flex-1"
                 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
               >
                 {service.description}
               </p>
 
               {/* Price & CTA Row */}
-              <div className="flex items-center justify-between pt-6 border-t border-white/10">
+              <div className="flex items-center justify-between pt-6 mt-8 border-t border-white/10">
                 <span
                   className="text-2xl text-white"
                   style={{ fontFamily: 'Anton, sans-serif' }}
@@ -146,12 +131,6 @@ const Services = () => {
                   </svg>
                 </Link>
               </div>
-
-              {/* Hover Accent */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-1 rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ backgroundColor: service.accent }}
-              ></div>
             </div>
           ))}
         </div>
